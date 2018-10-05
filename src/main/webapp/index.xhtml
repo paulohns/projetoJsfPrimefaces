@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+
+	<meta http-equiv="Content-Language" content="PT-BR" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+
+	<title>Analise de Impacto</title>
+	<style type="text/css">
+.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap,
+	.ui-layout-bd, .ui-layout-hd {
+	border: none;
+}
+
+.fonteMenor {
+	font-size: 12px !important;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 100% !important;
+}
+.ui-layout-unit-top .ui-layout-bd {
+   border: 0;
+}
+.ui-panelgrid td, .ui-panelgrid tr{
+   border-style: none !important
+}
+</style>
+</h:head>
+
+<h:body>
+	<div id="modais" class="modais">
+		<ui:insert name="modais">
+           <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+		<p:dialog widgetVar="statusDialog" id="process_msg" position="center" closable="false" closeOnEscape="false" modal="true" resizable="false" zindex="100000">
+		<p:graphicImage value="/images/ajaxloader.gif" />
+		</p:dialog>
+		
+		</ui:insert>
+	</div>
+	<p:layout fullPage="true">
+
+		<p:layoutUnit position="west" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<ui:insert name="esquerda">
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="east" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<ui:insert name="direita">
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="center">
+			<ui:insert name="conteudo">
+			
+			
+		 <p:tabView>
+			<p:tab title="Apresentação JSF">
+	           <h2>Apresentação do projeto</h2>
+			    <p:panelGrid columns="1" layout="grid" >
+				    <p:outputLabel value="O projeto foi criado com o JSF versão 2.0 Java 1.8 servidor Tomcat para rodar na versão 9"/>
+				    <p:outputLabel value="Utilizei o Maven para baixar as bibliotecas dependentes para pdoer rodar o projeto"/>
+				    <p:outputLabel value="Poderia baixar manualmente as libs java e adicionar ao projeto na pasta lib mas o Maven é mais recomendado"/>
+				    <p:outputLabel value="Aconselho baixar o maven e configurar as variáveis de ambiente para ele."/>
+				    <p:outputLabel value="O código java deixarei comentado para facilitar o entendimento da ligação com o JSF"/>
+				</p:panelGrid>
+	        </p:tab>
+	        <p:tab title="Cadastro exemplo">
+          		<h2>Cadastro</h2>
+			    <h:form>
+				    <h:panelGrid columns="2" cellpadding="5">
+				        <p:outputLabel for="date" value="Date: " />
+				        <p:inputMask id="date" value="#{maskView.date}" mask="99/99/9999"/>
+				 
+				        <p:outputLabel for="phone" value="Phone:" />
+				        <p:inputMask id="phone" value="#{maskView.phone}" mask="(999) 999-9999"/>
+				 
+				        <p:outputLabel for="phoneWithExt" value="Phone with Ext:" />
+				        <p:inputMask id="phoneWithExt" value="#{maskView.phoneExt}" mask="(999) 999-9999? x99999"/>
+				 
+				        <p:outputLabel for="taxId" value="Tax Id:" />
+				        <p:inputMask id="taxId" value="#{maskView.taxId}" mask="99-9999999"/>
+				 
+				        <p:outputLabel for="ssn" value="SSN:" />
+				        <p:inputMask id="ssn" value="#{maskView.ssn}" mask="999-99-9999"/>
+				 
+				        <p:outputLabel for="key"  value="Product Key: " />
+				        <p:inputMask id="key" value="#{maskView.productKey}" mask="a*-999-a999"/>
+				 
+				        <p:commandButton value="Reset" type="reset" />
+				        <p:commandButton value="Salvar" update="display" action="#{maskView.salvarDados}"/>
+				    </h:panelGrid>
+				 
+				    <p:dialog widgetVar="dlg" modal="true" resizable="false" header="Values" showEffect="fade"> 
+				        <p:panelGrid id="display" columns="2" columnClasses="label,value">
+				            <h:outputText value="Date: " />
+				            <h:outputText id="dateValue" value="#{maskView.date}" />
+				 
+				            <h:outputText value="Phone: " />
+				            <h:outputText id="phoneValue" value="#{maskView.phone}" />
+				 
+				            <h:outputText value="Phone with Ext: " />
+				            <h:outputText id="phoneWithExtValue" value="#{maskView.phoneExt}"/>
+				 
+				            <h:outputText value="taxId: " />
+				            <h:outputText id="taxValue" value="#{maskView.taxId}" />
+				 
+				            <h:outputText value="SSN: " />
+				            <h:outputText id="ssnValue" value="#{maskView.ssn}" />
+				 
+				            <h:outputText value="Product Key: " />
+				            <h:outputText id="keyValue" value="#{maskView.productKey}" />
+				        </p:panelGrid>
+				    </p:dialog>
+				</h:form>
+	        </p:tab>
+	        <p:tab title="Dúvidas - ferramentas">
+          		<h2>Dúvidas</h2>
+			    <p:panelGrid columns="1" layout="grid" >
+				    <p:outputLabel value="1 - JSF">&nbsp;<h:outputLink value="https://www.devmedia.com.br/guia/jsf-javaserver-faces/38322" target="_blank">[JSF]</h:outputLink></p:outputLabel>
+					<p:outputLabel value="2 - Primefaces">&nbsp;<h:outputLink value="https://www.primefaces.org/showcase/" target="_blank">[Primefaces ShowCase]</h:outputLink></p:outputLabel>
+				    <p:outputLabel value="3 - Maven">&nbsp;<h:outputLink value="https://mvnrepository.com/" target="_blank">[Maven Repository]</h:outputLink></p:outputLabel>
+					<p:outputLabel value="4 - Tomcat"><h:outputLink value="https://tomcat.apache.org/download-90.cgi" target="_blank">[Tomcat server]</h:outputLink></p:outputLabel>
+					<p:outputLabel value="5 - " />
+				</p:panelGrid>
+	        </p:tab>
+		</p:tabView>
+			
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="50" resizable="false"
+			closable="false" collapsible="false">
+			<ui:insert name="rodape">
+				<h:outputText styleClass="fonteMenor" value=" Projeto JSF Primefaces: Versão 1.0" />
+			</ui:insert>
+		</p:layoutUnit>
+
+	</p:layout>
+
+</h:body>
+</html>
